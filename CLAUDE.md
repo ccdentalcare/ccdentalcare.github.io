@@ -28,7 +28,7 @@ npm run card:bleed   # same with 0.125 in bleed for commercial printing
 | Doctor portrait | `src/assets/doctor-portrait.jpg` (640 × 800, 4:5) |
 | Hero stats | `src/components/Hero.tsx` |
 | About copy, values | `src/components/About.tsx` |
-| Calling-card text, URL, colours, fonts, logo image/badge | `tools/calling-card/card.json` (must match `clinic.ts`; `fonts` are node_modules paths of the site's fonts) |
+| Calling-card text, URL, colours, fonts, logo image/badge/round | `tools/calling-card/card.json` (must match `clinic.ts`; `fonts` are node_modules paths of the site's fonts) |
 | Page `<title>`, meta description | `index.html` |
 
 ## Deployment

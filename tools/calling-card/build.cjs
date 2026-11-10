@@ -45,7 +45,7 @@ const logoImageUrl = cfg.logoImage ? 'file://' + path.join(ROOT, cfg.logoImage) 
 const logo = (size, ringA, ringB, toothA, toothB, smile, id) => logoImageUrl
   ? (cfg.logoBadge
       ? `<span style="display:grid;place-items:center;width:${size}px;height:${size}px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.18)"><img src="${logoImageUrl}" width="${Math.round(size*0.68)}" height="${Math.round(size*0.68)}" style="display:block" alt=""></span>`
-      : `<img src="${logoImageUrl}" width="${size}" height="${size}" style="display:block;border-radius:50%" alt="">`)
+      : `<img src="${logoImageUrl}" width="${size}" height="${size}" style="display:block;border-radius:${cfg.logoRound === false ? '22%' : '50%'}" alt="">`)
   : `
 <svg viewBox="0 0 64 64" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
   <defs>
