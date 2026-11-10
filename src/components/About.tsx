@@ -1,23 +1,39 @@
 import { CLINIC } from '../data/clinic'
 import portraitUrl from '../assets/doctor-portrait.jpg'
-import { DrillIcon, MailIcon, PhoneIcon, PinIcon, ShieldIcon, SparkleIcon } from './Icons'
+import { CheckIcon, MailIcon, PhoneIcon, PinIcon } from './Icons'
 import { Reveal } from './Reveal'
 
-const PILLARS = [
+/** DEMO: placeholder milestones for presentation. */
+const MILESTONES = [
   {
-    icon: ShieldIcon,
-    title: 'Prevent',
-    text: 'Cleanings, sealants, fluoride and honest advice, so small problems never get the chance to grow.',
+    year: '2022',
+    title: 'Doors open in Toronto',
+    text: 'The clinic opens with one chair and consultations in Filipino and English.',
   },
   {
-    icon: DrillIcon,
-    title: 'Restore',
-    text: 'Fillings, crowns, root canals and dentures done only when needed, at a price range agreed before we start.',
+    year: '2024',
+    title: 'Digital imaging',
+    text: 'Low-dose digital X-rays replace film, making diagnosis faster and safer.',
   },
   {
-    icon: SparkleIcon,
-    title: 'Smile',
-    text: 'Gentle whitening and the confidence that comes from a healthy mouth you understand.',
+    year: '2026',
+    title: 'Family Saturdays',
+    text: 'Saturday mornings are set aside for families, with a gentle first-visit routine for children.',
+  },
+] as const
+
+const VALUES = [
+  {
+    title: 'A price range before any work',
+    text: 'You see the range on this site and the exact quote at your consultation.',
+  },
+  {
+    title: 'Unhurried appointments',
+    text: 'Slots are long enough to explain, to answer questions, and to never rush.',
+  },
+  {
+    title: 'Your language, your comfort',
+    text: 'Consultations in Filipino or English, whichever puts you at ease.',
   },
 ] as const
 
@@ -28,110 +44,102 @@ export function About() {
     <section id="about" className="section section--tint" aria-labelledby="about-title">
       <div className="container">
         <Reveal>
-          <div className="section__head section__head--center">
-            <span className="eyebrow">Our promise</span>
-            <h2 id="about-title" className="h2">
-              Three words we work by
-            </h2>
-          </div>
-        </Reveal>
-
-        <ul className="pillars" aria-label="Clinic principles">
-          {PILLARS.map((p, i) => {
-            const Icon = p.icon
-            return (
-              <Reveal key={p.title} as="li" delay={i * 80} className="pillar">
-                <span className="pillar__icon" aria-hidden="true">
-                  <Icon />
-                </span>
-                <h3 className="pillar__title">{p.title}</h3>
-                <p className="pillar__text">{p.text}</p>
-              </Reveal>
-            )
-          })}
-        </ul>
-
-        <Reveal delay={100}>
-          <div className="story-band">
+          <div className="about__intro">
             <div>
-              <span className="eyebrow">About the clinic</span>
-              <h3 className="story-band__title">When and why we started</h3>
-              <p className="story-band__text">{CLINIC.story}</p>
+              <span className="eyebrow">The clinic</span>
+              <h2 id="about-title" className="h2">
+                When and why <span className="italic-accent">C&amp;C</span> began
+              </h2>
+              <p className="lede">
+                Established {CLINIC.establishedMonth} {CLINIC.establishedYear} · {yearsOpen} years in{' '}
+                {CLINIC.address}
+              </p>
             </div>
-            <ul className="story-facts" aria-label="Clinic facts">
-              <li>
-                <span className="story-facts__label">Established</span>
-                <span className="story-facts__value">
-                  {CLINIC.establishedMonth} {CLINIC.establishedYear}
-                </span>
-              </li>
-              <li>
-                <span className="story-facts__label">Location</span>
-                <span className="story-facts__value">{CLINIC.address}</span>
-              </li>
-              <li>
-                <span className="story-facts__label">Years of care</span>
-                <span className="story-facts__value">{yearsOpen} and counting</span>
-              </li>
-              <li>
-                <span className="story-facts__label">Patient rating</span>
-                <span className="story-facts__value">4.9 / 5 (demo)</span>
-              </li>
-            </ul>
+            <p className="story">{CLINIC.story}</p>
           </div>
         </Reveal>
 
-        <Reveal delay={140}>
-          <article className="dentist" aria-label={`About Dr. ${CLINIC.doctor.fullName}`}>
-            <img
-              className="dentist__photo"
-              src={portraitUrl}
-              width={640}
-              height={800}
-              alt={`Portrait of Dr. ${CLINIC.doctor.fullName}, ${CLINIC.doctor.title}`}
-              loading="lazy"
-              decoding="async"
-            />
-            <div>
-              <div className="dentist__kicker">Your dentist</div>
-              <h3 className="dentist__name">
-                Dr. {CLINIC.doctor.fullName}
-                <small>{CLINIC.doctor.title}</small>
-              </h3>
-              <p className="dentist__role">{CLINIC.doctor.role}</p>
-              <p className="dentist__bio">{CLINIC.doctor.bio}</p>
-              <div className="dentist__contact">
-                <a className="contact-row" href={CLINIC.contact.phoneHref}>
-                  <span className="contact-row__icon">
-                    <PhoneIcon />
+        <Reveal delay={80}>
+          <ol className="htimeline" aria-label="Clinic milestones">
+            {MILESTONES.map((m) => (
+              <li key={m.year}>
+                <div className="htimeline__year">{m.year}</div>
+                <h3 className="htimeline__title">{m.title}</h3>
+                <p className="htimeline__text">{m.text}</p>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+
+        <div className="about__lower">
+          <Reveal delay={100}>
+            <article className="dentist" aria-label={`About Dr. ${CLINIC.doctor.fullName}`}>
+              <img
+                className="dentist__photo"
+                src={portraitUrl}
+                width={640}
+                height={800}
+                alt={`Portrait of Dr. ${CLINIC.doctor.fullName}, ${CLINIC.doctor.title}`}
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <div className="dentist__kicker">Your dentist</div>
+                <h3 className="dentist__name">
+                  Dr. {CLINIC.doctor.fullName}
+                  <small>{CLINIC.doctor.title}</small>
+                </h3>
+                <p className="dentist__role">{CLINIC.doctor.role}</p>
+                <p className="dentist__bio">{CLINIC.doctor.bio}</p>
+                <div className="dentist__contact">
+                  <a className="contact-row" href={CLINIC.contact.phoneHref}>
+                    <span className="contact-row__icon">
+                      <PhoneIcon />
+                    </span>
+                    <span>
+                      <span className="contact-row__label">Call or text</span>
+                      {CLINIC.contact.phoneDisplay}
+                    </span>
+                  </a>
+                  <a className="contact-row" href={`mailto:${CLINIC.contact.email}`}>
+                    <span className="contact-row__icon">
+                      <MailIcon />
+                    </span>
+                    <span>
+                      <span className="contact-row__label">Email</span>
+                      {CLINIC.contact.email}
+                    </span>
+                  </a>
+                  <span className="contact-row">
+                    <span className="contact-row__icon">
+                      <PinIcon />
+                    </span>
+                    <span>
+                      <span className="contact-row__label">Clinic</span>
+                      {CLINIC.name}, {CLINIC.address}
+                    </span>
                   </span>
-                  <span>
-                    <span className="contact-row__label">Call or text</span>
-                    {CLINIC.contact.phoneDisplay}
-                  </span>
-                </a>
-                <a className="contact-row" href={`mailto:${CLINIC.contact.email}`}>
-                  <span className="contact-row__icon">
-                    <MailIcon />
-                  </span>
-                  <span>
-                    <span className="contact-row__label">Email</span>
-                    {CLINIC.contact.email}
-                  </span>
-                </a>
-                <span className="contact-row">
-                  <span className="contact-row__icon">
-                    <PinIcon />
-                  </span>
-                  <span>
-                    <span className="contact-row__label">Clinic</span>
-                    {CLINIC.name}, {CLINIC.address}
-                  </span>
-                </span>
+                </div>
               </div>
-            </div>
-          </article>
-        </Reveal>
+            </article>
+          </Reveal>
+
+          <Reveal delay={160}>
+            <ul className="values" aria-label="What we stand for">
+              {VALUES.map((v) => (
+                <li key={v.title}>
+                  <span className="values__check" aria-hidden="true">
+                    <CheckIcon />
+                  </span>
+                  <div>
+                    <strong>{v.title}</strong>
+                    <span>{v.text}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
       </div>
     </section>
   )

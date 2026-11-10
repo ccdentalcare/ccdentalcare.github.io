@@ -8,14 +8,13 @@ export function Footer() {
   const year = new Date().getFullYear()
   return (
     <footer className="footer">
-      <div className="footer__wave" aria-hidden="true" />
       <div className="container">
         <div className="footer__grid">
           <div>
             <Brand onClick={() => scrollToSection('home')} />
             <p className="footer__blurb">
-              <strong>{CLINIC.tagline}</strong> General dentistry for families in {CLINIC.address},
-              led by Dr. {CLINIC.doctor.fullName}, {CLINIC.doctor.title}.
+              General dentistry for families in {CLINIC.address}, led by Dr.{' '}
+              {CLINIC.doctor.fullName}, {CLINIC.doctor.title}.
             </p>
           </div>
 
@@ -35,7 +34,8 @@ export function Footer() {
           <div>
             <h3 className="footer__title">Hours</h3>
             <ul className="footer__list">
-              <li>Mon – Fri · {formatHoursRange(WEEKLY_HOURS[1])}</li>
+              <li>Mon – Wed, Fri · {formatHoursRange(WEEKLY_HOURS[1])}</li>
+              <li>Thursday · {formatHoursRange(WEEKLY_HOURS[4])}</li>
               <li>Saturday · {formatHoursRange(WEEKLY_HOURS[6])}</li>
               <li>Sunday · {formatHoursRange(WEEKLY_HOURS[0])}</li>
             </ul>

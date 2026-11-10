@@ -6,31 +6,31 @@
 import type { DayHours, Weekday } from '../lib/time'
 
 export const CLINIC = {
-  name: 'Esguerra Dental Clinic',
-  shortName: 'Esguerra',
-  tagline: 'Prevent. Restore. Smile.',
-  motto: 'Healthy habits first, repairs when needed, and a smile you are proud to share.',
-  address: 'Bangkok, Thailand',
+  name: 'C&C Dental Care',
+  shortName: 'C&C',
+  tagline: 'Your smile, our care.',
+  motto: 'Quiet rooms, clear prices and a dentist who takes her time.',
+  address: 'Toronto, Canada',
   /** IANA time zone used for "open now" and appointment slot calculations. */
-  timeZone: 'Asia/Bangkok',
+  timeZone: 'America/Toronto',
   /** DEMO: placeholder founding date. */
-  establishedYear: 2019,
-  establishedMonth: 'May',
+  establishedYear: 2022,
+  establishedMonth: 'October',
   /** DEMO: placeholder founding story. */
   story:
-    'Esguerra Dental Clinic was established in May 2019 for Filipino and expatriate families in Bangkok who kept arriving with the same story: a small problem ignored until it became a painful, expensive one. We built the clinic around three words, prevent, restore and smile, so that every patient knows the order we work in. Prevention comes first, repairs are done only when needed and always at a price range agreed in advance, and the smile is the result we measure ourselves by.',
+    'C&C Dental Care opened in October 2022 after Dr. Consigna noticed how many Filipino families in Toronto were flying home for dental work because they did not trust local prices or did not feel understood. The clinic was built to close that gap: a calm, unhurried practice where consultations happen in Filipino or English, every treatment is quoted as a peso-equivalent range before it starts, and routine care is taken as seriously as any cosmetic case.',
   doctor: {
-    fullName: 'Johanna B. Esguerra',
+    fullName: 'Christelle Faith A. Consigna',
     title: 'DMD',
     role: 'Doctor of Dental Medicine · General Dentist',
     /** DEMO: placeholder biography for presentation. */
-    bio: 'Dr. Esguerra is a general dentist who believes the best treatment is the one you never need. She spends her consultations on prevention and plain-language explanations, keeps a gentle pace for anxious patients, and quotes a price range before any work begins.',
+    bio: 'Dr. Consigna is a general dentist known for gentle hands and straight answers. She favours prevention over repair, explains every option with its price range, and keeps appointments long enough that no one feels rushed out of the chair.',
   },
   contact: {
-    phoneDisplay: '0908 765 4321',
-    phoneHref: 'tel:+639087654321',
-    /** Supplied with a space; written here as a valid address. */
-    email: 'esguerradental@clinic.com',
+    phoneDisplay: '0955 568 2947',
+    phoneHref: 'tel:+639555682947',
+    /** Supplied as "c&c dentalcare@clinic.com"; written here as a valid address. */
+    email: 'ccdentalcare@clinic.com',
   },
 } as const
 
@@ -40,16 +40,16 @@ export const CLINIC = {
  */
 export const WEEKLY_HOURS: Readonly<Record<Weekday, DayHours | null>> = {
   0: null,
-  1: { open: 9 * 60 + 30, close: 18 * 60 + 30, breakStart: 12 * 60 + 30, breakEnd: 13 * 60 + 30 },
-  2: { open: 9 * 60 + 30, close: 18 * 60 + 30, breakStart: 12 * 60 + 30, breakEnd: 13 * 60 + 30 },
-  3: { open: 9 * 60 + 30, close: 18 * 60 + 30, breakStart: 12 * 60 + 30, breakEnd: 13 * 60 + 30 },
-  4: { open: 9 * 60 + 30, close: 18 * 60 + 30, breakStart: 12 * 60 + 30, breakEnd: 13 * 60 + 30 },
-  5: { open: 9 * 60 + 30, close: 18 * 60 + 30, breakStart: 12 * 60 + 30, breakEnd: 13 * 60 + 30 },
-  6: { open: 9 * 60, close: 14 * 60 },
+  1: { open: 9 * 60, close: 17 * 60, breakStart: 12 * 60, breakEnd: 13 * 60 },
+  2: { open: 9 * 60, close: 17 * 60, breakStart: 12 * 60, breakEnd: 13 * 60 },
+  3: { open: 9 * 60, close: 17 * 60, breakStart: 12 * 60, breakEnd: 13 * 60 },
+  4: { open: 11 * 60, close: 19 * 60, breakStart: 14 * 60, breakEnd: 15 * 60 },
+  5: { open: 9 * 60, close: 17 * 60, breakStart: 12 * 60, breakEnd: 13 * 60 },
+  6: { open: 9 * 60, close: 13 * 60 },
 }
 
 /** Human-readable summary of the break, shown next to the hours. */
-export const BREAK_NOTE = 'Lunch break 12:30 – 1:30 PM on weekdays'
+export const BREAK_NOTE = 'One-hour lunch break on weekdays · late opening Thursdays'
 
 /** Appointment slot granularity in minutes. */
 export const SLOT_STEP_MINUTES = 30
@@ -97,34 +97,26 @@ export const SERVICE_CATEGORIES: readonly ServiceCategory[] = [
   'Kids',
 ]
 
-/** Short description shown on each category group header. */
-export const CATEGORY_BLURBS: Readonly<Record<ServiceCategory, string>> = {
-  Preventive: 'Prevent — keep small problems from ever starting.',
-  Restorative: 'Restore — repair what needs repairing, at an agreed range.',
-  Cosmetic: 'Smile — brighten what is already healthy.',
-  Kids: 'Little smiles — gentle first visits for children.',
-}
-
 /** DEMO: general-dentistry services with indicative peso price ranges. */
 export const SERVICES: readonly Service[] = [
   {
     id: 'consultation',
     name: 'Consultation & Oral Exam',
     category: 'Preventive',
-    priceMin: 500,
-    priceMax: 800,
+    priceMin: 700,
+    priceMax: 1000,
     durationMinutes: 30,
-    description: 'A full look at teeth, gums and bite, then a plan with a price range before anything begins.',
+    description: 'A thorough look at teeth, gums and bite, then a plan with a price range before anything begins.',
     icon: 'tooth',
   },
   {
     id: 'cleaning',
     name: 'Oral Prophylaxis (Cleaning)',
     category: 'Preventive',
-    priceMin: 1100,
-    priceMax: 1600,
+    priceMin: 1400,
+    priceMax: 2000,
     durationMinutes: 45,
-    description: 'Gentle scaling and polishing that lifts plaque, tartar and everyday stains.',
+    description: 'Ultrasonic scaling and polishing that lifts plaque, tartar and everyday stains.',
     icon: 'sparkle',
     popular: true,
   },
@@ -132,29 +124,29 @@ export const SERVICES: readonly Service[] = [
     id: 'fluoride',
     name: 'Fluoride Treatment',
     category: 'Preventive',
-    priceMin: 700,
-    priceMax: 1000,
+    priceMin: 900,
+    priceMax: 1200,
     durationMinutes: 20,
-    description: 'A protective varnish that hardens enamel and helps stop decay between visits.',
+    description: 'A protective varnish that hardens enamel and helps keep cavities away between visits.',
     icon: 'shield',
   },
   {
     id: 'sealants',
     name: 'Pit & Fissure Sealants',
     category: 'Preventive',
-    priceMin: 800,
-    priceMax: 1200,
+    priceMin: 1000,
+    priceMax: 1400,
     priceUnit: 'per tooth',
     durationMinutes: 30,
-    description: 'A thin coating over the grooves of back teeth, where cavities most often begin.',
+    description: 'A thin coating over the grooves of back teeth, where decay most often begins.',
     icon: 'shield',
   },
   {
     id: 'xray',
     name: 'Digital X-ray',
     category: 'Preventive',
-    priceMin: 500,
-    priceMax: 800,
+    priceMin: 700,
+    priceMax: 1000,
     durationMinutes: 20,
     description: 'Low-dose imaging that shows what sits between and beneath the teeth.',
     icon: 'xray',
@@ -163,8 +155,8 @@ export const SERVICES: readonly Service[] = [
     id: 'filling',
     name: 'Tooth-coloured Filling',
     category: 'Restorative',
-    priceMin: 1500,
-    priceMax: 3200,
+    priceMin: 2000,
+    priceMax: 3800,
     priceUnit: 'per tooth',
     durationMinutes: 60,
     description: 'Composite fillings matched to your tooth shade. The range follows the size of the cavity.',
@@ -175,8 +167,8 @@ export const SERVICES: readonly Service[] = [
     id: 'extraction',
     name: 'Simple Tooth Extraction',
     category: 'Restorative',
-    priceMin: 1500,
-    priceMax: 3600,
+    priceMin: 2000,
+    priceMax: 4500,
     priceUnit: 'per tooth',
     durationMinutes: 45,
     description: 'Careful removal of a damaged or loose tooth under local anaesthesia, with written aftercare.',
@@ -186,8 +178,8 @@ export const SERVICES: readonly Service[] = [
     id: 'root-canal',
     name: 'Root Canal Therapy',
     category: 'Restorative',
-    priceMin: 8000,
-    priceMax: 15000,
+    priceMin: 10000,
+    priceMax: 18000,
     priceUnit: 'per tooth',
     durationMinutes: 90,
     description: 'Relieves pain and saves an infected tooth. Front teeth sit low in the range, molars higher.',
@@ -197,8 +189,8 @@ export const SERVICES: readonly Service[] = [
     id: 'crown',
     name: 'Dental Crown',
     category: 'Restorative',
-    priceMin: 12000,
-    priceMax: 20000,
+    priceMin: 15000,
+    priceMax: 24000,
     priceUnit: 'per tooth',
     durationMinutes: 90,
     description: 'A custom cap that restores a weakened tooth. The range reflects the material you choose.',
@@ -208,8 +200,8 @@ export const SERVICES: readonly Service[] = [
     id: 'dentures',
     name: 'Partial & Complete Dentures',
     category: 'Restorative',
-    priceMin: 16000,
-    priceMax: 36000,
+    priceMin: 20000,
+    priceMax: 45000,
     durationMinutes: 60,
     description: 'Comfortable, natural-looking replacements for missing teeth, fitted over a few short visits.',
     icon: 'denture',
@@ -218,8 +210,8 @@ export const SERVICES: readonly Service[] = [
     id: 'night-guard',
     name: 'Custom Night Guard',
     category: 'Restorative',
-    priceMin: 4000,
-    priceMax: 6500,
+    priceMin: 5000,
+    priceMax: 8000,
     durationMinutes: 30,
     description: 'A made-to-measure guard that protects against grinding and eases jaw tension overnight.',
     icon: 'shield',
@@ -228,8 +220,8 @@ export const SERVICES: readonly Service[] = [
     id: 'whitening',
     name: 'Teeth Whitening',
     category: 'Cosmetic',
-    priceMin: 12000,
-    priceMax: 18000,
+    priceMin: 15000,
+    priceMax: 22000,
     durationMinutes: 90,
     description: 'In-clinic professional whitening for a visibly brighter smile in one visit.',
     icon: 'sparkle',
@@ -239,8 +231,8 @@ export const SERVICES: readonly Service[] = [
     id: 'kids-checkup',
     name: 'Kids Check-up & Cleaning',
     category: 'Kids',
-    priceMin: 800,
-    priceMax: 1200,
+    priceMin: 1000,
+    priceMax: 1500,
     durationMinutes: 40,
     description: 'A friendly first visit: gentle cleaning, a look at growing teeth and a prize for bravery.',
     icon: 'child',

@@ -1,7 +1,7 @@
 # Project guide for Claude
 
 Dental clinic "digital calling card" website + printable calling card.
-Live example: https://esguerradentalclinic.github.io/ (repo `esguerradentalclinic/esguerradentalclinic.github.io`).
+Live example: https://ccdentalcare.github.io/ (repo `ccdentalcare/ccdentalcare.github.io`).
 The same codebase is the **template for every new clinic site**. For a new clinic,
 follow `docs/NEW-CLINIC-PLAYBOOK.md` step by step.
 
@@ -24,7 +24,7 @@ npm run card:bleed   # same with 0.125 in bleed for commercial printing
 | --- | --- |
 | Clinic name, doctor, contact, address, time zone, founding date, hours, services & peso prices | `src/data/clinic.ts` |
 | Colour scheme (CSS tokens) | `src/styles/global.css` (`:root` block at the top) |
-| Logo (client's monogram-and-tooth mark, PNG) | `src/assets/logo-192.png`, `src/assets/logo-512.png`, `public/favicon.png`, `public/apple-touch-icon.png`; rendered by `src/components/Logo.tsx` |
+| Logo (client's gold C&C monogram, PNG) | `src/assets/logo-192.png`, `src/assets/logo-512.png`, `public/favicon.png`, `public/apple-touch-icon.png`; rendered by `src/components/Logo.tsx` |
 | Doctor portrait | `src/assets/doctor-portrait.jpg` (640 × 800, 4:5) |
 | Hero stats | `src/components/Hero.tsx` |
 | About copy, values | `src/components/About.tsx` |

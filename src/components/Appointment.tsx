@@ -323,9 +323,9 @@ export function Appointment({ request }: AppointmentProps) {
       <div className="container">
         <Reveal>
           <div className="section__head">
-            <span className="eyebrow">Appointments</span>
+            <span className="eyebrow">Book</span>
             <h2 id="appointment-title" className="h2">
-              Book your visit <span className="italic-accent">in three steps</span>
+              Reserve your <span className="italic-accent">appointment</span>
             </h2>
             <p className="lede">
               Choose a treatment, pick an open slot and leave your details. We confirm by text or
@@ -353,7 +353,7 @@ export function Appointment({ request }: AppointmentProps) {
                           </button>
                         ) : (
                           <>
-                            <span className="step__num">{s.n}</span>
+                            <span className="step__num">{['I', 'II', 'III'][s.n - 1]}</span>
                             <span className="step__label">{s.label}</span>
                           </>
                         )}
@@ -405,7 +405,7 @@ export function Appointment({ request }: AppointmentProps) {
                     <span />
                     <button
                       type="button"
-                      className="btn btn--violet"
+                      className="btn btn--gold"
                       disabled={!service}
                       onClick={() => setStep(2)}
                     >
@@ -529,7 +529,7 @@ export function Appointment({ request }: AppointmentProps) {
                     </button>
                     <button
                       type="button"
-                      className="btn btn--violet"
+                      className="btn btn--gold"
                       disabled={!date || slotStart === null}
                       onClick={() => setStep(3)}
                     >
@@ -694,7 +694,7 @@ export function Appointment({ request }: AppointmentProps) {
                     <button type="button" className="btn btn--ghost" onClick={() => setStep(2)}>
                       Back
                     </button>
-                    <button type="submit" className="btn btn--violet">
+                    <button type="submit" className="btn btn--gold">
                       Confirm appointment
                       <CheckIcon className="btn__icon" />
                     </button>
@@ -749,7 +749,7 @@ export function Appointment({ request }: AppointmentProps) {
                   ) : null}
 
                   <div className="panel__actions" style={{ justifyContent: 'center' }}>
-                    <button type="button" className="btn btn--violet" onClick={resetFlow}>
+                    <button type="button" className="btn btn--gold" onClick={resetFlow}>
                       Book another appointment
                     </button>
                   </div>

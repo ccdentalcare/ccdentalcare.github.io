@@ -3,6 +3,7 @@ import { BREAK_NOTE, CLINIC, WEEKLY_HOURS } from '../data/clinic'
 import portraitUrl from '../assets/doctor-portrait.jpg'
 import { useNow } from '../hooks/useNow'
 import {
+  formatHoursRange,
   formatMinutes,
   getOpenStatus,
   getZonedParts,
@@ -13,46 +14,39 @@ import {
   type Weekday,
 } from '../lib/time'
 import { scrollToSection } from '../lib/scroll'
-import { ArrowRightIcon, PhoneIcon } from './Icons'
+import { ArrowRightIcon, CalendarIcon, ClockIcon, MailIcon, PhoneIcon, PinIcon } from './Icons'
 import { Reveal } from './Reveal'
 
 const DAY_ORDER: Weekday[] = [1, 2, 3, 4, 5, 6, 0]
-
-/** The weekly chart spans 7:00 AM to 8:00 PM. */
-const AXIS_START = 7 * 60
-const AXIS_END = 20 * 60
-const TICKS = [8, 10, 12, 14, 16, 18, 20].map((h) => h * 60)
-
-const pct = (minutes: number): number =>
-  Math.max(0, Math.min(100, ((minutes - AXIS_START) / (AXIS_END - AXIS_START)) * 100))
-
-/** DEMO: presentation-only trust figures. */
-const STATS = [
-  { value: '6+', label: 'Years in Bangkok' },
-  { value: '4.9★', label: 'Patient rating' },
-  { value: '3,800+', label: 'Smiles cared for' },
-] as const
 
 export function Hero() {
   const now = useNow(15_000)
   const parts = useMemo(() => getZonedParts(now, CLINIC.timeZone), [now])
   const status = useMemo(() => getOpenStatus(parts, WEEKLY_HOURS), [parts])
-  const nowMin = minutesOfDay(parts)
-  const clock = formatMinutes(nowMin)
+  const clock = formatMinutes(minutesOfDay(parts))
   const dateLabel = `${WEEKDAY_NAMES[parts.weekday]}, ${MONTH_NAMES[parts.month - 1]} ${parts.day}`
 
   return (
     <section id="home" className="hero" aria-labelledby="home-title">
-      <div className="hero__bg" aria-hidden="true">
-        <div className="ribbon ribbon--1" />
-        <div className="ribbon ribbon--3" />
-        <div className="ribbon ribbon--2" />
-      </div>
+      <div className="hero__swoosh hero__swoosh--2" aria-hidden="true" />
+      <div className="hero__swoosh" aria-hidden="true" />
 
       <div className="container">
         <div className="hero__grid">
-          <div>
-            <Reveal>
+          <Reveal>
+            <div className="hero__photo">
+              <img
+                src={portraitUrl}
+                width={640}
+                height={800}
+                alt={`Portrait of Dr. ${CLINIC.doctor.fullName}, ${CLINIC.doctor.title}`}
+                decoding="async"
+              />
+            </div>
+          </Reveal>
+
+          <div className="hero__copy">
+            <Reveal delay={60}>
               <div className={`status status--${status.state}`} role="status" aria-live="polite">
                 <span className="status__dot" aria-hidden="true" />
                 <span>{status.headline}</span>
@@ -60,149 +54,112 @@ export function Hero() {
               </div>
             </Reveal>
 
-            <Reveal delay={80}>
-              <h1 id="home-title" className="h1 hero__title">
-                <span className="word">Prevent.</span>
-                <span className="word">Restore.</span>
-                <span className="word word--gold">Smile.</span>
+            <Reveal delay={120}>
+              <h1 id="home-title" className="hero__name" style={{ marginTop: 22 }}>
+                Dr. {CLINIC.doctor.fullName}
+                <small>
+                  {CLINIC.doctor.title} · General Dentist · {CLINIC.address}
+                </small>
               </h1>
+              <div className="rule" aria-hidden="true">
+                ✦
+              </div>
+              <p className="hero__tag">{CLINIC.tagline}</p>
             </Reveal>
 
-            <Reveal delay={160}>
+            <Reveal delay={200}>
               <p className="lede">
-                {CLINIC.name} is a general dentistry practice in {CLINIC.address}, led by Dr.{' '}
-                {CLINIC.doctor.fullName}, {CLINIC.doctor.title}. {CLINIC.motto}
+                {CLINIC.name} is a general dentistry practice in {CLINIC.address}. {CLINIC.motto}{' '}
+                Every treatment is quoted as a peso price range before it begins.
               </p>
             </Reveal>
 
-            <Reveal delay={240}>
+            <Reveal delay={260}>
               <div className="hero__actions">
-                <button type="button" className="btn btn--violet" onClick={() => scrollToSection('appointment')}>
+                <button type="button" className="btn btn--gold" onClick={() => scrollToSection('appointment')}>
                   Book an appointment
                   <ArrowRightIcon className="btn__icon" />
                 </button>
-                <a className="btn btn--ghost" href={CLINIC.contact.phoneHref}>
-                  <PhoneIcon className="btn__icon" />
-                  {CLINIC.contact.phoneDisplay}
-                </a>
+                <button type="button" className="btn btn--ghost" onClick={() => scrollToSection('services')}>
+                  View price list
+                </button>
               </div>
-            </Reveal>
-
-            <Reveal delay={320}>
-              <dl className="hero__trust">
-                {STATS.map((s) => (
-                  <div key={s.label} className="stat">
-                    <dt className="sr-only">{s.label}</dt>
-                    <dd className="stat__value" style={{ margin: 0 }}>
-                      {s.value}
-                    </dd>
-                    <dd className="stat__label" style={{ margin: 0 }}>
-                      {s.label}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
             </Reveal>
           </div>
-
-          <Reveal delay={200}>
-            <div className="portrait">
-              <img
-                className="portrait__img"
-                src={portraitUrl}
-                width={640}
-                height={800}
-                alt={`Portrait of Dr. ${CLINIC.doctor.fullName}, ${CLINIC.doctor.title}`}
-                decoding="async"
-              />
-              <div className="portrait__tag">
-                <strong>Dr. {CLINIC.doctor.fullName}</strong>
-                <span>{CLINIC.doctor.role}</span>
-              </div>
-            </div>
-          </Reveal>
         </div>
+      </div>
 
-        <Reveal delay={120}>
-          <article className="chart-wrap" aria-labelledby="avail-title">
-            <div>
-              <div className="chart__label">Clinic availability</div>
-              <h2 id="avail-title" className="chart__status">
-                {status.headline}
-              </h2>
-              <p className="chart__detail">{status.detail}</p>
-              <div className="chart__clock" aria-live="off">
-                <div className="chart__time">{clock}</div>
-                <div className="chart__date">{dateLabel} · Bangkok time</div>
-              </div>
-              <p className="chart__note">{BREAK_NOTE}. Sundays closed.</p>
-            </div>
-
-            <div className="chart" role="table" aria-label="Weekly opening hours">
-              <div className="chart__axis" aria-hidden="true">
-                <span />
-                <div className="chart__ticks">
-                  {TICKS.map((t) => (
-                    <span key={t} className="chart__tick" style={{ left: `${pct(t)}%` }}>
-                      {formatMinutes(t).replace(':00', '')}
-                    </span>
-                  ))}
+      <Reveal delay={120}>
+        <div className="glance" aria-label="At a glance">
+          <div className="container">
+            <div className="glance__grid">
+              <div className="glance__cell">
+                <span className="glance__icon" aria-hidden="true">
+                  <ClockIcon />
+                </span>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <span className="glance__label">Clinic hours</span>
+                  <ul className="hours-mini" aria-label="Weekly hours">
+                    {DAY_ORDER.map((day) => {
+                      const hours = WEEKLY_HOURS[day]
+                      const isToday = day === parts.weekday
+                      return (
+                        <li key={day} className={isToday ? 'is-today' : ''}>
+                          <span>
+                            {WEEKDAY_SHORT[day]}
+                            {isToday ? ' · today' : ''}
+                          </span>
+                          <span className={hours ? '' : 'closed'}>{formatHoursRange(hours)}</span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  <span className="glance__sub">{BREAK_NOTE}</span>
                 </div>
               </div>
-              {DAY_ORDER.map((day) => {
-                const hours = WEEKLY_HOURS[day]
-                const isToday = day === parts.weekday
-                const label = hours
-                  ? `${WEEKDAY_NAMES[day]}: ${formatMinutes(hours.open)} to ${formatMinutes(hours.close)}`
-                  : `${WEEKDAY_NAMES[day]}: closed`
-                return (
-                  <div
-                    key={day}
-                    role="row"
-                    className={`chart__row ${isToday ? 'chart__row--today' : ''} ${hours ? '' : 'chart__row--closed'}`}
-                    aria-label={label}
-                  >
-                    <span className="chart__day" role="cell">
-                      {isToday ? <span className="chart__dotToday" aria-hidden="true" /> : null}
-                      {WEEKDAY_SHORT[day]}
-                    </span>
-                    <div className="chart__track" role="cell">
-                      {hours ? (
-                        <>
-                          <div
-                            className="chart__bar"
-                            style={{ left: `${pct(hours.open)}%`, width: `${pct(hours.close) - pct(hours.open)}%` }}
-                          >
-                            <span>{formatMinutes(hours.open)}</span>
-                            <span>{formatMinutes(hours.close)}</span>
-                          </div>
-                          {hours.breakStart !== undefined && hours.breakEnd !== undefined ? (
-                            <div
-                              className="chart__bar chart__bar--break"
-                              style={{
-                                left: `${pct(hours.breakStart)}%`,
-                                width: `${pct(hours.breakEnd) - pct(hours.breakStart)}%`,
-                              }}
-                              aria-hidden="true"
-                            >
-                              Lunch
-                            </div>
-                          ) : null}
-                        </>
-                      ) : (
-                        <span className="chart__closed">Closed</span>
-                      )}
-                      {isToday && nowMin >= AXIS_START && nowMin <= AXIS_END ? (
-                        <span className="chart__now" style={{ left: `${pct(nowMin)}%` }} aria-hidden="true" />
-                      ) : null}
-                    </div>
-                  </div>
-                )
-              })}
+
+              <div className="glance__cell">
+                <span className="glance__icon" aria-hidden="true">
+                  <CalendarIcon />
+                </span>
+                <div>
+                  <span className="glance__label">Right now</span>
+                  <span className="glance__value">{status.headline}</span>
+                  <span className="glance__sub">{status.detail}</span>
+                  <span className="glance__sub">
+                    {clock} · {dateLabel} · Toronto time
+                  </span>
+                </div>
+              </div>
+
+              <a className="glance__cell" href={CLINIC.contact.phoneHref}>
+                <span className="glance__icon" aria-hidden="true">
+                  <PhoneIcon />
+                </span>
+                <div>
+                  <span className="glance__label">Call or text</span>
+                  <span className="glance__value">{CLINIC.contact.phoneDisplay}</span>
+                  <span className="glance__sub">Replies during clinic hours</span>
+                </div>
+              </a>
+
+              <a className="glance__cell" href={`mailto:${CLINIC.contact.email}`}>
+                <span className="glance__icon" aria-hidden="true">
+                  <MailIcon />
+                </span>
+                <div style={{ minWidth: 0 }}>
+                  <span className="glance__label">Email &amp; address</span>
+                  <span className="glance__value">{CLINIC.contact.email}</span>
+                  <span className="glance__sub">
+                    <PinIcon style={{ display: 'inline', width: 12, height: 12, verticalAlign: -1, marginRight: 4 }} />
+                    {CLINIC.address}
+                  </span>
+                </div>
+              </a>
             </div>
-          </article>
-        </Reveal>
-      </div>
+          </div>
+        </div>
+      </Reveal>
     </section>
   )
 }
